@@ -1,4 +1,5 @@
 This website is awesome!!! -SH
+
 # Try a Day: open items to review and revise
 
 Try a Day is a career exploration app for students, with a separate section for parents and guardians. This file lists what still needs checking, what we parked for later, and what the school's tech team needs to know.
@@ -32,10 +33,10 @@ I wrote these from general knowledge, not official sources. Each needs a check b
 
 ## 2. Data to verify and update every year
 
-- [ ] **Pay figures.** All 87 use U.S. Bureau of Labor Statistics median pay for May 2025, rounded. Update them each year when BLS releases new figures.
-  - Five figures came from sites republishing BLS data, not bls.gov itself. Check these first: **software developer, power line worker, logistics coordinator, farm or ranch manager, animal trainer, underwater welder (commercial diver), industrial maintenance mechanic, professional athlete, musician or singer.**
+- [ ] **Pay figures.** All 127 use U.S. Bureau of Labor Statistics median pay for May 2025, rounded. One exception: heavy equipment operator uses May 2024, the latest figure found. Update them each year when BLS releases new figures.
+  - These figures came from sites republishing BLS data, not bls.gov itself. Check these first: **software developer, power line worker, logistics coordinator, farm or ranch manager, animal trainer, underwater welder (commercial diver), industrial maintenance mechanic, professional athlete, musician or singer, crane operator, insurance underwriter.**
   - Several figures cover a wider BLS group, and the cards say so: police (includes detectives), paramedic (includes EMTs), ship's officer (all water transportation workers), occupational therapy assistant (includes aides).
-  - **Perfumer** has no BLS category of its own; it uses the median pay for chemists, and the card says so. **Film and TV makeup artist** uses the BLS "theatrical and performance" category, a small field with a very wide pay range; the card notes that salon and bridal artists usually earn much less. **Elevator inspector** uses all construction and building inspectors. **Wind farm site manager** uses the broad BLS group "managers, all other" ($141,900), which may run high; real job ads range from about $75K to $145K. Both cards say so. Consider replacing the wind figure with a better source. **Power plant operator** uses the BLS group that includes distributors and dispatchers. **Workplace safety technician** uses technicians only ($61,560); the card mentions that specialists with a bachelor's earn more. **Musician and actor** have hourly pay only (BLS publishes no yearly figure), so their cards show pay per hour and they sort last by pay. **Military (enlisted)** uses 2026 basic pay from the DFAS pay tables plus the Congressional Research Service average for an E-5; update both each January. **Small business owner** shows no pay figure on purpose, because the government publishes none; the card explains why. **Hairstylist** pay ($36K) is the government's figure for hairdressers, hairstylists and cosmetologists.
+  - **Perfumer** has no BLS category of its own; it uses the median pay for chemists, and the card says so. **Film and TV makeup artist** uses the BLS "theatrical and performance" category, a small field with a very wide pay range; the card notes that salon and bridal artists usually earn much less. **Elevator inspector** uses all construction and building inspectors. **Wind farm site manager** uses the broad BLS group "managers, all other" ($141,900), which may run high; real job ads range from about $75K to $145K. Both cards say so. Consider replacing the wind figure with a better source. **Power plant operator** uses the BLS group that includes distributors and dispatchers. **Workplace safety technician** uses technicians only ($61,560); the card mentions that specialists with a bachelor's earn more. **Musician and actor** have hourly pay only (BLS publishes no yearly figure), so their cards show pay per hour and they sort last by pay. **Military (enlisted)** uses 2026 basic pay from the DFAS pay tables plus the Congressional Research Service average for an E-5; update both each January. **Video game designer** uses the BLS group for web and digital interface designers (O*NET 15-1255.01), and the card says so. **Small business owner** shows no pay figure on purpose, because the government publishes none; the card explains why. **Hairstylist** pay ($36K) is the government's figure for hairdressers, hairstylists and cosmetologists.
 - [ ] **The budget screen** (second opening screen):
   - Rent and utilities, $1,500: Census Bureau median gross rent, 2024 ($1,487). Consider using local rent instead.
   - Groceries, $350: USDA low-cost food plan, 2026, taken from a secondary source. Confirm against USDA's own table.
@@ -54,7 +55,20 @@ I wrote these from general knowledge, not official sources. Each needs a check b
    - Recommended: (a) and (c) together.
 2. **Link programs to the jobs a student saves.** Each explore program is already tagged with the career groups it fits (study abroad with travel and the world, art programs with design and creativity, and so on). Next step: show "Fits jobs you saved" and put those programs first.
 3. **Grade level for parents planning for a child.** Parent pages say "Junior year" instead of assuming 11th grade. With several children, each child could have a grade.
-4. **More careers.** All the careers on this list have been added. Ideas for a next round: surgical technologist, heavy equipment operator (pay figure still needed), social media manager.
+4. **More careers: next categories** (from the November 2026 category check; 127 jobs now).
+   1. ~~**Science and research**~~ Done (12 jobs): chemist, medical lab scientist, environmental scientist, food scientist, meteorologist, forensic science technician, geologist, medical researcher, epidemiologist, astronomer, plus perfumer and wildlife biologist.
+   2. ~~**Education and child care.**~~ Done (7 jobs) in a new group: elementary, high school, special education and preschool teacher, school counselor, librarian, plus speech-language pathologist. Still possible: teacher assistant, childcare center director, college professor.
+   3. ~~**Media and communication**~~ Done (7 jobs) in a new group: journalist, public relations and social media specialist, video editor, photographer, technical writer, editor, audio and video technician. Graphic designer, interpreter and court reporter are also listed there. Not yet: camera operator, announcer.
+   4. ~~**Driving and heavy equipment**~~ Done. Truck driver, heavy equipment operator and crane operator added. Not yet: bus driver.
+   5. ~~**Mental health and community care.**~~ Done. Mental health counselor, psychologist and community health worker added. Not yet: home health aide, recreational therapist.
+   6. ~~**Tech entry jobs.**~~ Done. IT support specialist, robotics technician and CNC machinist added. Not yet: UX designer.
+   7. ~~**Hospitality, recreation and fitness.**~~ Done. Hotel manager, event planner, athletic trainer and personal trainer added, in a new Hospitality, recreation and fitness group. Not yet: park ranger.
+   8. ~~**Money and insurance.**~~ Done. Actuary, insurance underwriter, loan officer and financial advisor added.
+### Final check (November 24, 2026)
+- All 127 jobs: valid groups, scenes, report pages and traits; each one comes up first when you search its own name.
+- Every job-growth claim in the app was rechecked against the government's 2025–35 projections (released August 2026). All matched.
+- Search: removed 11 duplicate search words that pointed different ways, and searches now prefer the longest matching phrase ("technical writer" no longer also pulls in every "writer" job).
+
 5. **Real artwork.** The workday scenes are simple placeholder illustrations drawn in code.
 6. **Local information.** Local rent on the budget screen, and the district's own high schools, CTE programs and dual enrollment.
 7. **"Gamify" button for students** (requested by student testers). It would turn a career exploration into a game: students see a real situation someone in that job faces and guess what to do, for example "A storm knocked out power. As the line worker, what's your first move?" Each answer shows what a professional would actually do and why.

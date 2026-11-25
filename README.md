@@ -1,5 +1,4 @@
 This website is awesome!!! -SH
-
 # Try a Day: open items to review and revise
 
 Try a Day is a career exploration app for students, with a separate section for parents and guardians. This file lists what still needs checking, what we parked for later, and what the school's tech team needs to know.
@@ -27,15 +26,16 @@ I wrote these from general knowledge, not official sources. Each needs a check b
 - [ ] **Typical tasks for 32 common jobs** that aren't career pages, such as cashier, CNA, office manager and stay-at-home parent.
 - [ ] **Task guesses from 17 job-title keywords**, such as "manager," "driver" or "technician."
 - [ ] **The 18 everyday activities** in the parent "narrow it down" path, and the skills each one maps to.
-- [ ] **"Similar jobs" suggestions** for jobs the app doesn't have (104 search terms). For example, "lawyer" suggests interpreter, social worker and HR specialist.
+- [ ] **"Similar jobs" suggestions** for jobs the app doesn't have (104 search terms). For example, "chef" or "pharmacist" suggests related jobs the app does have.
 
 ---
 
 ## 2. Data to verify and update every year
 
-- [ ] **Pay figures.** All 51 use U.S. Bureau of Labor Statistics median pay for May 2025, rounded. Update them each year when BLS releases new figures.
-  - Five figures came from sites republishing BLS data, not bls.gov itself. Check these first: **software developer, power line worker, logistics coordinator, farm or ranch manager, animal trainer.**
+- [ ] **Pay figures.** All 87 use U.S. Bureau of Labor Statistics median pay for May 2025, rounded. Update them each year when BLS releases new figures.
+  - Five figures came from sites republishing BLS data, not bls.gov itself. Check these first: **software developer, power line worker, logistics coordinator, farm or ranch manager, animal trainer, underwater welder (commercial diver), industrial maintenance mechanic, professional athlete, musician or singer.**
   - Several figures cover a wider BLS group, and the cards say so: police (includes detectives), paramedic (includes EMTs), ship's officer (all water transportation workers), occupational therapy assistant (includes aides).
+  - **Perfumer** has no BLS category of its own; it uses the median pay for chemists, and the card says so. **Film and TV makeup artist** uses the BLS "theatrical and performance" category, a small field with a very wide pay range; the card notes that salon and bridal artists usually earn much less. **Elevator inspector** uses all construction and building inspectors. **Wind farm site manager** uses the broad BLS group "managers, all other" ($141,900), which may run high; real job ads range from about $75K to $145K. Both cards say so. Consider replacing the wind figure with a better source. **Power plant operator** uses the BLS group that includes distributors and dispatchers. **Workplace safety technician** uses technicians only ($61,560); the card mentions that specialists with a bachelor's earn more. **Musician and actor** have hourly pay only (BLS publishes no yearly figure), so their cards show pay per hour and they sort last by pay. **Military (enlisted)** uses 2026 basic pay from the DFAS pay tables plus the Congressional Research Service average for an E-5; update both each January. **Small business owner** shows no pay figure on purpose, because the government publishes none; the card explains why. **Hairstylist** pay ($36K) is the government's figure for hairdressers, hairstylists and cosmetologists.
 - [ ] **The budget screen** (second opening screen):
   - Rent and utilities, $1,500: Census Bureau median gross rent, 2024 ($1,487). Consider using local rent instead.
   - Groceries, $350: USDA low-cost food plan, 2026, taken from a secondary source. Confirm against USDA's own table.
@@ -54,9 +54,26 @@ I wrote these from general knowledge, not official sources. Each needs a check b
    - Recommended: (a) and (c) together.
 2. **Link programs to the jobs a student saves.** Each explore program is already tagged with the career groups it fits (study abroad with travel and the world, art programs with design and creativity, and so on). Next step: show "Fits jobs you saved" and put those programs first.
 3. **Grade level for parents planning for a child.** Parent pages say "Junior year" instead of assuming 11th grade. With several children, each child could have a grade.
-4. **More careers.** Requested or likely popular: lawyer, mechanical engineer, chef, hairstylist, pharmacist, speech-language pathologist.
+4. **More careers.** All the careers on this list have been added. Ideas for a next round: surgical technologist, heavy equipment operator (pay figure still needed), social media manager.
 5. **Real artwork.** The workday scenes are simple placeholder illustrations drawn in code.
 6. **Local information.** Local rent on the budget screen, and the district's own high schools, CTE programs and dual enrollment.
+7. **"Gamify" button for students** (requested by student testers). It would turn a career exploration into a game: students see a real situation someone in that job faces and guess what to do, for example "A storm knocked out power. As the line worker, what's your first move?" Each answer shows what a professional would actually do and why.
+   - Questions to settle:
+     - Where it lives: a button on each job, or its own mode.
+     - Whether to keep score or award badges.
+     - Whether students' choices should count as likes and dislikes in their matches.
+     - Who writes or checks the scenarios. They need someone who knows the job, like the training steps do.
+   - A good first step: write scenarios for 5 or 6 popular careers and test them with students before covering all 51.
+8. **"I am a teacher" on the welcome page.** A teacher version to use when interviewing students for transition planning, especially vocational assessments.
+   - Possible features:
+     - An interview mode the teacher runs alongside the student. It would ask the same kinds of questions (good days, strengths, likes and dislikes on real job tasks) in plain language the teacher can read aloud.
+     - Space for the teacher's notes and observations next to the student's answers.
+     - A summary organized around the IEP transition plan's postsecondary goal areas: education or training, employment, and, where it applies, independent living. It would include the student's interests, preferences, strengths and the careers explored, so it can feed into the transition assessment.
+     - Accessibility supports for students with disabilities, such as read-aloud, fewer choices per screen and picture-based options.
+   - Questions to settle:
+     - Which vocational assessment or district forms the summary should line up with.
+     - Whether the teacher needs to save sessions. Today nothing is stored. Saving student information would bring in FERPA and district privacy rules, so a copy or email summary may be the safer start.
+     - Who reviews the wording. A transition coordinator or special education teacher should check it.
 
 ### Ideas not yet discussed
 - An accessibility review with students who use screen readers.

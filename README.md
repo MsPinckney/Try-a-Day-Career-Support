@@ -2,7 +2,7 @@ This website is awesome!!! -SH
 
 # Try a Day: open items to review and revise
 
-Try a Day is a career exploration app for students, with a separate section for parents and guardians. This file lists what still needs checking, what we parked for later, and what the school's tech team needs to know.
+Try a Day is a career exploration app for students, with separate sections for parents and guardians and for teachers. This file lists what still needs checking, what we parked for later, and what the school's tech team needs to know.
 
 - **Live version:** https://claude.ai/artifact/FFDKy5hgW3WWyrb696hpag (updates whenever changes are published)
 - **School copy:** `try-a-day.html`, one self-contained file. It is a snapshot, so request a new copy after any change.
@@ -28,6 +28,19 @@ I wrote these from general knowledge, not official sources. Each needs a check b
 - [ ] **Task guesses from 17 job-title keywords**, such as "manager," "driver" or "technician."
 - [ ] **The 18 everyday activities** in the parent "narrow it down" path, and the skills each one maps to.
 - [ ] **"Similar jobs" suggestions** for jobs the app doesn't have (104 search terms). For example, "chef" or "pharmacist" suggests related jobs the app does have.
+
+### Teacher content (IEP transition prep, added November 26, 2026)
+Review these with the special education team, ideally the transition coordinator.
+- [ ] **Interview questions** for each Level 1 area: vocational interests, academic strengths and functional skills, learning style, and work-related behaviors, plus the answer choices for each.
+- [ ] **Draft sentence templates** for the Level 1 table, PLOP student strengths, measurable postsecondary goals, transition needs and the coordinated set of transition activities. They follow the NYSED *Guide to Quality IEP Development and Implementation* (revised September 2023). Goals are written as "After high school, [student] will…" Transition needs and activities are written with school staff acting ("[student] will be instructed in…", "will be provided with…").
+- [ ] **Interview order (updated):** directions (with a required diploma choice: Local, Regents or Advanced Regents) → the 3 intake questions → "Do you know what career you want?" → try a day. Once a job has been typed in or one job has been looked at, the teacher can skip straight to the drafts.
+- [ ] **Executive functioning questions** (added to work-related behaviors): follow-through on turning work in on time, remembering to complete and turn in assignments, and organization and planning. A "Developing" or "Needs support" rating adds executive functioning support to the drafts. If related services apply, it goes in the Related Services row as counseling. If not, it goes in Instruction as academic supports, or in Community Experiences if Instruction is also unchecked.
+- [ ] **PLOP diploma sentence:** "[Name] plans on earning a [diploma] in order to reach their career goal of becoming [career]." If the student is unsure: "...as they continue to explore their career options. Their preferences indicate that they would be most suited for work as [top 3 matching jobs]."
+- [ ] **Default "responsible" wording** in the activities table (for example, "School district: school counselor; ACCES-VR"). Swap in your district's actual titles.
+- [ ] **Pay goal ranges** in the money question (under $30,000 up to more than $100,000).
+- [ ] **The training document link** (osepartnership.org file 114) wouldn't open for me. I used the OSE Partnership *Family Guide to Transition Planning* (version 2.0) instead. Check that the drafts meet the standard in the training document you meant.
+- [ ] **Quote rule:** anything typed in quotation marks is copied word for word, and the page warns the teacher if a quote is changed while revising. Confirm this matches how your team wants quotes used.
+- [ ] **Privacy:** nothing is saved or sent. Student information stays in the browser tab and is erased by "New student" or closing the tab. Confirm this meets district policy before teachers use real student names.
 
 ---
 
@@ -88,6 +101,13 @@ I wrote these from general knowledge, not official sources. Each needs a check b
      - Which vocational assessment or district forms the summary should line up with.
      - Whether the teacher needs to save sessions. Today nothing is stored. Saving student information would bring in FERPA and district privacy rules, so a copy or email summary may be the safer start.
      - Who reviews the wording. A transition coordinator or special education teacher should check it.
+
+### More teacher tools (planned)
+The teacher home screen has one button today: **Prepare vocational assessment and transition information for an IEP.** Other teacher situations will get their own buttons later. Ideas to discuss:
+- [ ] Classroom career exploration lesson (whole class)
+- [ ] Annual update of an existing Level 1 assessment
+- [ ] Parent/guardian Level 1 interview
+- [ ] Teacher Level 1 assessment form
 
 ### Ideas not yet discussed
 - An accessibility review with students who use screen readers.

@@ -2128,7 +2128,7 @@ function tPoss(){var n=tNmRaw();return n==="The student"?"the student's":(/s$/i.
 function tJob(c){return c.name.split(" ").map(function(w){return /^[A-Z0-9]{2,}$/.test(w)?w:w.toLowerCase();}).join(" ");}
 function tA(w){return (/^[aeiou]/i.test(w)?"an ":"a ")+w;}
 function tInt(){var t=T(),li=tTraits(1).slice(0,2);if(li.length)return tList(tTraitTxt(li));if(t.env.length)return tList(t.env.map(function(e){return {out:"outdoor work",move:"active work",desk:"desk work",people:"working with people",hands:"hands-on work",travel:"work in different places"}[e];}));if(t.matter)return tLow(MATTER.filter(function(x){return x[0]===t.matter;})[0][1]);return "the careers explored";}
-function tLow(s){return s.charAt(0).toLowerCase()+s.slice(1);}
+function tLow(s){if(/^[A-Z0-9]{2}/.test(s))return s;return s.charAt(0).toLowerCase()+s.slice(1);}
 function tList(a){a=a.filter(Boolean);if(!a.length)return "";if(a.length===1)return a[0];var cx=a.some(function(x){return / and |,/.test(x);});if(a.length===2)return a[0]+(cx?", as well as ":" and ")+a[1];return cx?a.slice(0,-1).join("; ")+"; and "+a[a.length-1]:a.slice(0,-1).join(", ")+", and "+a[a.length-1];}
 function tQuotes(txt){var out=[],re=/["“]([^"“”]+)["”]/g,m;txt=txt||"";while((m=re.exec(txt)))out.push(m[1]);return out;}
 function tPara(txt){return (txt||"").replace(/["“][^"“”]*["”]/g," ").replace(/\s+/g," ").replace(/^[\s,.;:-]+|[\s,;:-]+$/g,"").trim();}
@@ -2271,6 +2271,7 @@ function tL1Draft(){var t=T(),n=tNmRaw(),o=[];
  var mn=tNote("money");if(mn)a.push(mn);
  if(tIsUnsure()){a.push("After exploring three careers, "+n+" is unsure of career interests and needs continued support to develop knowledge of careers and interests.");var u=tNote("unsure");if(u)a.push(u);}
  var it=tNote("l1_int");if(it)a.push(it);
+ var nx=tNextJobs();if(nx.jobs.length)a.push((nx.guess?"Top career matches based on "+tPoss()+" interests":"Career details")+" (from Try a Day, using U.S. Bureau of Labor Statistics pay data): "+nx.jobs.map(function(c){return c.name+": typical pay about "+payTxt(c)+"; training: "+tLow(c.pathText.replace(/\.$/,""))+"; key skills: "+c.skills.map(tLow).join(", ");}).join(". ")+".");
  o.push(a.join(" "));
  /* 2. Academic strengths and functional skills */
  var b=[],ac=(t.sel.acad||[]).map(function(k){return tLow(T_ACAD.filter(function(x){return x[0]===k;})[0][1]);}),fu=(t.sel.func||[]).map(function(k){return tLow(T_FUNC.filter(function(x){return x[0]===k;})[0][1]);});
@@ -2291,12 +2292,56 @@ function tPlop(){var t=T(),n=tNmRaw(),j=tGoalJobs(),li=tTraits(1).slice(0,3),s=[
  else if(li.length)s.push(n+" enjoys "+tList(tTraitTxt(li))+".");
   if(dipN){if(cn.length)s.push(n+" plans on earning "+tA(dipN)+" in order to reach their career goal"+(cn.length>1?"s":"")+" of becoming "+tList(cn.map(tA))+".");
   else{var top=tRanked().slice(0,3).map(function(c){return tA(tJob(c));});s.push(n+" plans on earning "+tA(dipN)+" as they continue to explore their career options."+(top.length?" Their preferences indicate that they would be most suited for work as "+tList(top).replace(/, and ([^,]*)$/," or $1").replace(/^([^,]*) and /,"$1 or ")+".":""));}}
+ var nsx=tNextSentence();if(nsx)s.push(nsx);
  var ac=(t.sel.acad||[]).slice(0,3).map(function(k){return tLow(T_ACAD.filter(function(x){return x[0]===k;})[0][1]);}),fu=(t.sel.func||[]).slice(0,3).map(function(k){return tLow(T_FUNC.filter(function(x){return x[0]===k;})[0][1]);});
  if(ac.length||fu.length)s.push(n+"'s strengths include "+tList(ac.concat(fu))+".");
  var le=(t.sel.learn||[]).slice(0,2).map(function(k){return T_LEARNTXT[k];});if(le.length)s.push(n+" learns best by "+tList(le)+".");
  var st=T_BEH.filter(function(b){return (t.sel["beh_"+b[0]]||[])[0]==="s";}).map(function(b){return T_BEHTXT[b[0]].s;});if(st.length)s.push(n+" "+tList(st.slice(0,2))+".");
  var q=tAllQuotes((tIsUnsure()?["unsure"]:[]).concat(["known"]).concat(t.tried.map(function(id){return "like_"+id;})).concat(["unsure","l1_int"]))[0];if(q)s.push(n+' said, "'+q+'"'+(/[.!?]$/.test(q)?"":"."));
  return s.join(" ");}
+function tGr(){var g=T().grade;return g==="8"?"ms":g==="ungraded"?"12":g;}
+function tNextJobs(){var j=tGoalJobs();return j.length?{jobs:j.slice(0,2),guess:false}:{jobs:tRanked().slice(0,3),guess:true};}
+function tNext(){var t=T(),gr=tGr(),nj=tNextJobs(),main=nj.jobs[0],cat=main?catOf(main.id):null,P=cat&&PREP[cat];
+ var classes=P?P.classes.map(tClean):[],clubs=P?P.clubs.map(function(x){return x.replace(/\s*\([^)]*\)/g,"");}):[];
+ var et=t.opts.edutype||tDefaultEdu(),school=["college4","college2","explore"].indexOf(et)>-1,want={};
+ if(nj.guess)want["Interest quiz (Dept. of Labor)"]=1;want["Job shadow or internship"]=1;
+ if(school&&gr!=="ms")want["Dual enrollment"]=1;
+ var tags=main?(CATS.filter(function(k){return k.ids.indexOf(main.id)>-1;}).map(function(k){return k.id;})):[];
+ if(tags.some(function(x){return ["health","nature","serve"].indexOf(x)>-1;}))want["Volunteering"]=1;
+ if((gr==="11"||gr==="12")&&tags.some(function(x){return ["serve","nature","build"].indexOf(x)>-1;}))want["AmeriCorps NCCC"]=1;
+ if(school)["Scholarship Finder (Dept. of Labor)","College Scorecard","FAFSA"].forEach(function(k){want[k]=1;});if(et==="college4")want["Free SAT prep (Khan Academy)"]=1;
+ var progs=exploreFor(gr).concat(collegeFor(gr)).filter(function(x){return want[x.s||x.t];});
+ var post={college4:"applying to 4-year colleges",college2:"applying to a 2-year college, certificate or technical training program",appr:"applying to paid apprenticeship programs",ojt:"applying for jobs that provide on-the-job training",mil:"meeting with a military recruiter",explore:"enrolling in career exploration or training courses"}[et];
+ return {gr:gr,jobs:nj.jobs,guess:nj.guess,main:main,classes:classes,clubs:clubs,progs:progs,post:post};}
+/* Rewrite a student-voice step ("Take biology.") as a third-person action by the school ("Maya will be scheduled to take biology.") */
+var T_STAFF={take:"will be scheduled to take",volunteer:"will be connected with opportunities to volunteer",join:"will be supported in joining",ask:"will be supported in asking",try:"will be given opportunities to try",get:"will be supported in getting",stay:"will be encouraged to stay",learn:"will be given opportunities to learn",keep:"will be supported in keeping",look:"will be assisted in looking",start:"will be supported in starting",practice:"will be given opportunities to practice",do:"will be encouraged to do",fix:"will be encouraged to fix",tutor:"will be given opportunities to tutor",work:"will be encouraged to work",build:"will be supported in building",train:"will be encouraged to train",make:"will be encouraged to make",run:"will be encouraged to run",spend:"will be encouraged to spend",notice:"will be encouraged to notice",cook:"will be encouraged to cook",experiment:"will be encouraged to experiment",track:"will be encouraged to track",collect:"will be encouraged to collect",be:"will be supported in being",babysit:"will be encouraged to babysit",read:"will be encouraged to read",plan:"will be supported in planning",play:"will be encouraged to play",apply:"will be assisted in applying",fill:"will be assisted in filling",compare:"will be assisted in comparing",find:"will be assisted in finding",choose:"will be assisted in choosing",check:"will be assisted in checking",consider:"will be supported in considering",visit:"will be given opportunities to visit",decide:"will be supported in deciding",research:"will be assisted in researching",watch:"will be encouraged to watch",pick:"will be assisted in picking",talk:"will be supported in talking"};
+var T_ING={join:"joining",ask:"asking",get:"getting",keep:"keeping",look:"looking",start:"starting",build:"building",be:"being",plan:"planning",apply:"applying",fill:"filling",compare:"comparing",find:"finding",choose:"choosing",check:"checking",consider:"considering",decide:"deciding",research:"researching",pick:"picking",talk:"talking"};
+var T_AFTER=["graduate","earn","finish","start","apply","look","keep","work","decide","consider","get","pass","take","build","find","enlist","become","intern","do","join"];
+function tYou(x){var n=tNmRaw();return x.replace(/\b[Yy]ou are\b/g,n+" is").replace(/\b[Yy]ou're\b/g,n+" is").replace(/\b[Yy]ou'll\b/g,n+" will").replace(/\b[Yy]ou've\b/g,n+" has").replace(/\b[Yy]ourself\b/g,"themselves").replace(/\b[Yy]our\b/g,n+"'s").replace(/\b[Yy]ou (have|do|go)\b/g,function(m,v){return n+" "+({have:"has",do:"does",go:"goes"})[v];}).replace(/\b[Yy]ou (want|need|like|turn|know|finish|love|enjoy|live|work|take|get|graduate|pass|apply|earn|start|qualify|plan)\b/g,function(m,v){return n+" "+v+"s";}).replace(/\b[Yy]ou\b/g,n);}
+function tIng(v){if(/ie$/.test(v))return v.slice(0,-2)+"ying";if(["get","run","stop","plan","shop","set","put","swim","sit","chat"].indexOf(v)>-1)return v+v.slice(-1)+"ing";if(/[^e]e$/.test(v))return v.slice(0,-1)+"ing";return v+"ing";}
+var T_VERBS=Object.keys(T_STAFF).concat(["stay","save","earn","pass","finish","graduate","become","learn","find","see","meet","help","use","show","write","draw","sign","bring","study","take","volunteer","fix","build","work","make","try","keep","join"]);
+function tGerundTail(str){return str.replace(/\b(and|or) ([a-z]+)\b/g,function(m,c,v){return T_VERBS.indexOf(v)>-1&&!/ing$/.test(v)?c+" "+tIng(v):m;});}
+function tStaff(x,after){var lead=x.match(/^((?:During|In|After|Before|While|Once|If possible|This summer|Over the summer)[^,]*), ([a-z]+)\b/);if(lead&&(T_STAFF[lead[2]]||T_AFTER.indexOf(lead[2])>-1)){var inner=tStaff(x.slice(lead[1].length+2).replace(/^./,function(c){return c.toUpperCase();}),after);return lead[1]+", "+inner;}
+ return tStaff0(x,after);}
+function tStaff0(x,after){var n=tNmRaw(),w=(x.split(/\s+/)[0]||"").replace(/[^A-Za-z]/g,"").toLowerCase(),rest=x.slice(x.indexOf(" ")+1);x=x.trim();
+ if(after){if(T_AFTER.indexOf(w)>-1)return tYou(n+" will be prepared to "+tLow(x));return tYou(x);}
+ var m=T_STAFF[w];if(!m)return tYou(x);if(x.indexOf(" ")<0)return tYou(n+" "+m+".");
+ return tYou(n+" "+m+" "+(/ in [a-z]+ing$/.test(m)?tGerundTail(rest):rest));}
+function tStaffStep(txt,after){return sentences(txt).map(function(x){return tStaff(x,after);}).join(" ");}
+function tNextDraft(){var n=tNmRaw(),x=tNext(),o=[];if(!x.main)return "";
+ if(x.guess)o.push("Because "+n+" is still exploring, these recommendations are based on "+tPoss()+" top career matches: "+tList(x.jobs.map(function(c){return c.name;}))+".");
+ if(x.classes.length)o.push("Classes: "+n+" will be scheduled to take "+tList(x.classes)+".");
+ if(x.clubs.length)o.push("Clubs and activities: "+n+" will be encouraged and supported to participate in "+tList(x.clubs.map(tLow))+".");
+ (x.guess?x.jobs.slice(0,1):x.jobs).forEach(function(c){o.push("Steps toward becoming "+tA(tJob(c))+":");stepPairs(c,x.gr).forEach(function(p){var lab=p[0].replace(/^If you haven't yet$/,"If not yet completed");o.push("• "+lab+": "+tStaffStep(p[1],/^After graduation/.test(p[0])));});o.push("• Note: "+tYou(c.apply.replace(/^Honest note:\s*/i,"").replace(/^./,function(m){return m.toUpperCase();})));});
+ if(x.progs.length){o.push("Programs: "+n+" will be assisted in exploring these programs:");x.progs.forEach(function(p){var u=p.links?p.links[0][1]:searchURL(p.search);o.push("• "+(p.s||p.t.split(":")[0])+(p.gl?" ("+p.gl+")":"")+": "+u);});}
+ o.push("These steps will be reviewed with "+n+" and the school counselor.");
+ return o.join("\n");}
+function tNextSentence(){var n=tNmRaw(),x=tNext();if(!x.main)return "";var bits=[];
+ if(x.guess)bits.push("completing a career interest inventory");
+ if(x.classes.length)bits.push("taking "+tList(x.classes.slice(0,2)));
+ if(x.clubs.length)bits.push((x.guess?"trying ":"joining ")+tLow(x.clubs[0]));
+ if(x.guess)bits.push("completing a job shadow or internship to learn more about careers");else if(x.post)bits.push(x.post+" during senior year");
+ return n+"'s recommended next steps"+(x.guess?" while continuing to explore careers":" toward this goal")+" are "+tList(bits)+".";}
 function tCareerNames(){var j=tGoalJobs();if(j.length)return j.map(tJob);var st=(T().known==="yes"&&T().stated||"").trim();return st?[st]:[];}
 function tCareerName(){return tCareerNames()[0]||"";}
 function tLink(){var t=T(),li=tTraits(1).slice(0,2),ac=(t.sel.acad||[]).slice(0,2).map(function(k){return tLow(T_ACAD.filter(function(x){return x[0]===k;})[0][1]);}),bits=[];
@@ -2306,15 +2351,15 @@ function tDefaultEdu(){var j=tGoalJobs()[0],t=T();if(!j)return t.path==="college
 function tGoals(){var t=T(),n=tNmRaw(),R=t.rel,c=tCareerName(),lk=tLink(),et=t.opts.edutype||tDefaultEdu(),o=[];
  var cf=c?" to prepare for a career as "+tA(c):" in a field that matches "+tPoss()+" interest in "+tInt();
  var edu={college4:"enroll in a 4-year college program"+cf,college2:"enroll in a 2-year college, certificate or technical training program"+cf,appr:"enter a paid apprenticeship program"+cf,ojt:"complete on-the-job training"+cf,mil:"enlist in the military and complete training"+cf,explore:"enroll in career exploration and training courses at a community college or training program to identify a career that matches "+tPoss()+" interests"}[et];
- o.push(R.edu?(lk?lk+"after high school "+n:"After high school, "+n)+" will "+edu+".":"Not applicable");
+ var cw=tNext().classes.slice(0,2);o.push(R.edu?(lk?lk+(cw.length?"after graduating from high school with coursework in "+tList(cw)+", ":"after high school ")+n:(cw.length?"After graduating from high school with coursework in "+tList(cw)+", ":"After high school, ")+n)+" will "+edu+".":"Not applicable");
  var li=tTraits(1).slice(0,2);
  o.push(R.emp?(c?"After completing training, "+n+" will be employed as "+tA(c)+".":"After high school, "+n+" will obtain part-time or full-time employment in a setting that matches "+tPoss()+" interest in "+tInt()+"."):"Not applicable");
  var lv=t.opts.living.map(function(k){return T_LIVETXT[k];});
  o.push(R.ind?(lv.length?"After high school, "+n+" will "+tList(lv)+(t.opts.living.indexOf("budget")>-1&&t.money&&T_MONEYLO[t.money]!=null&&t.money!=="unsure"?", consistent with "+tPoss()+" goal of earning "+tLow(tMoneyLabel(t.money)).replace(/ a year$/,"")+" a year":"")+".":"After high school, "+n+" will [independent living goal]."):"Not applicable");
  return o;}
 function tClean(x){if(/^The subject you would like to teach/i.test(x))return "courses in the subject they would like to teach";return tLow(x.replace(/\s*\([^)]*\)/g,"").replace(/,\s*(if offered|every year you can|with AP if you can|at the highest level)\s*$/i,"").trim());}
-function tClasses(){var j=tGoalJobs()[0];var cat=j?catOf(j.id):null;var p=cat&&PREP[cat];return p?p.classes.slice(0,3).map(tClean):[];}
-function tNeedSkills(){var t=T(),o=[];T_BEH.forEach(function(b){var r=(t.sel["beh_"+b[0]]||[])[0];if(r==="n"||r==="d")o.push({punct:"time management and punctuality",persist:"strategies for staying on task and completing work",dir:"following multi-step directions",team:"working cooperatively with others",follow:"follow-through, including completing and turning in work on time",remember:"strategies for remembering to complete and turn in assignments",organize:"organization and planning skills"}[b[0]]);});return o;}
+function tClasses(){return tNext().classes.slice(0,3);}
+function tNeedSkills(){var t=T(),o=[];T_BEH.forEach(function(b){var r=(t.sel["beh_"+b[0]]||[])[0];if(r==="n"||r==="d")o.push({punct:"time management and punctuality",persist:"strategies for staying on task and completing work",dir:"following multi-step directions",team:"working cooperatively with others",follow:"follow-through, including completing and turning in work on time",remember:"the use of an academic planner or phone reminders to track assignments and due dates",organize:"the use of organizational strategies for materials and schedules"}[b[0]]);});return o;}
 function tNeeds(){var t=T(),n=tNmRaw();if(!t.rel.needs)return "Not applicable";var s=[],dip=(T_DIP.filter(function(x){return x[0]===t.opts.diploma;})[0]||["",""]);var cl=tClasses(),c=tCareerName();
  s.push("In consideration of "+tPoss()+" present levels of performance, "+n+" will be provided with a course of study"+(dip[0]?" leading to "+tA(dip[1]):"")+(cl.length?" that includes "+tList(cl)+(c?", which relate to "+tPoss()+" interest in becoming "+tA(c):""):"")+".");
  var sk=tNeedSkills();if(tIsUnsure())sk.unshift("career exploration and identifying career interests");sk.push("self-advocacy, including explaining how "+n+" learns best");
@@ -2337,7 +2382,7 @@ function tActs(){var t=T(),n=tNmRaw(),R=t.rel,c=tCareerName(),cl=tClasses(),o=[]
  o.push(R.fva?[n+" will be provided with an updated Level 1 vocational assessment each year"+(c?" and a situational assessment in a work setting related to a career as "+tA(c):" and situational assessments in work settings connected to "+tPoss()+" interests")+".","School district: special education teacher and transition coordinator"]:na);
  return o;}
 var T_SECS={s1:{title:"Level 1 Student Vocational Assessment and PLOP Student Strengths",next:"rel"},s2:{title:"Measurable Postsecondary Goals",next:"s3"},s3:{title:"Transition Needs",next:"s4"},s4:{title:"Coordinated Set of Transition Activities",next:"done"}};
-function tCells(sec){var t=T();if(sec==="s1"){var l=tL1Draft();return [["l1_0",l[0]],["l1_1",l[1]],["l1_2",l[2]],["l1_3",l[3]],["plop",tPlop()]];}
+function tCells(sec){var t=T();if(sec==="s1"){var l=tL1Draft();return [["l1_0",l[0]],["l1_1",l[1]],["l1_2",l[2]],["l1_3",l[3]],["next",tNextDraft()],["plop",tPlop()]];}
  if(sec==="s2"){var g=tGoals();return [["g_0",g[0]],["g_1",g[1]],["g_2",g[2]]];}
  if(sec==="s3")return [["needs",tNeeds()]];
  var a=tActs(),o=[];a.forEach(function(r,i){o.push(["a"+i+"_s",r[0]]);o.push(["a"+i+"_r",r[1]]);});return o;}
@@ -2351,12 +2396,12 @@ var T_ALBL=["Instruction","Related Services","Community Experiences","Developmen
 function tSecText(sec,html){var d=T().drafts,e=function(s){return html?esc(s||""):(s||"");};
  var tb=function(rows){return html?'<table border="1" style="border-collapse:collapse">'+rows.map(function(r){return '<tr>'+r.map(function(c){return '<td style="padding:6px;vertical-align:top">'+e(c)+'</td>';}).join("")+'</tr>';}).join("")+'</table>':rows.map(function(r){return r.join(": ");}).join("\n\n");};
  var h=function(s){return html?'<p><b>'+s+'</b></p>':s+"\n";};
- if(sec==="s1")return h("Level 1 Student Vocational Assessment")+tb(T_L1LBL.map(function(l,i){return [l,d["l1_"+i]];}))+(html?"":"\n\n")+h("PLOP (Present Levels of Performance) Student Strengths Section")+tb([[d.plop]]);
+ if(sec==="s1")return h("Level 1 Student Vocational Assessment")+tb(T_L1LBL.map(function(l,i){return [l,d["l1_"+i]];}))+(html?"":"\n\n")+h("Recommended next steps")+(html?'<p>'+esc(d.next||"").replace(/\n/g,"<br>")+'</p>':(d.next||"")+"\n\n")+h("PLOP (Present Levels of Performance) Student Strengths Section")+tb([[d.plop]]);
  if(sec==="s2")return h("Measurable Postsecondary Goals")+tb(T_GLBL.map(function(l,i){return [l+":",d["g_"+i]];}));
  if(sec==="s3")return h("Transition Needs")+tb([[d.needs]]);
  return h("Coordinated Set of Transition Activities")+tb([["Needed activities to facilitate the student’s movement from school to post-school activities","Service/Activity","School District/Agency Responsible"]].concat(T_ALBL.map(function(l,i){return [l,d["a"+i+"_s"],d["a"+i+"_r"]];})));}
 function vTSec(sec){var t=T(),S1=T_SECS[sec],body="";var num={s1:1,s2:2,s3:3,s4:4}[sec];
- if(sec==="s1")body='<h3>Level 1 Student Vocational Assessment</h3>'+T_L1LBL.map(function(l,i){return tCell("l1_"+i,l,7);}).join("")+'<h3>PLOP (Present Levels of Performance) Student Strengths Section</h3><p class="small muted">One short paragraph with the key ideas from the assessment.</p>'+tCell("plop","Student strengths",5);
+ if(sec==="s1")body='<h3>Level 1 Student Vocational Assessment</h3>'+T_L1LBL.map(function(l,i){return tCell("l1_"+i,l,7);}).join("")+'<h3>Recommended next steps</h3><p class="small muted">Classes, activities, steps toward the career and programs to look into, like the student report in Try a Day.</p>'+tCell("next","Recommended next steps",12)+'<h3>PLOP (Present Levels of Performance) Student Strengths Section</h3><p class="small muted">One short paragraph with the key ideas from the assessment, including a one-sentence summary of the next steps.</p>'+tCell("plop","Student strengths",5);
  else if(sec==="s2")body=T_GLBL.map(function(l,i){return tCell("g_"+i,l,3);}).join("");
  else if(sec==="s3")body='<p class="small muted">In consideration of present levels of performance, transition service needs of the student that focus on the student\'s courses of study, taking into account the student\'s strengths, preferences and interests as they relate to transition from school to post-school activities:</p>'+tCell("needs","Transition needs",6);
  else body=T_ALBL.map(function(l,i){return '<div class="card tact"><h4>'+l+'</h4>'+tCell("a"+i+"_s","Service/Activity",3)+tCell("a"+i+"_r","School District/Agency Responsible",2)+'</div>';}).join("");
